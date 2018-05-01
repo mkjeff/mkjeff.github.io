@@ -1,1 +1,31 @@
-theme: jekyll-theme-dinky
+# Dependencies
+markdown:         redcarpet
+redcarpet: 
+    extensions: ["tables"]
+
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+# relative_permalinks: true
+
+# Setup
+title:            'Break the Loop'
+tagline:          'Loop'
+description:      'take a snapshot'
+url:              https://mkjeff.github.io/
+baseurl:          /
+
+author:
+  name:           'Hsinchange He'
+  url:            https://github.com/mkjeff
+
+paginate:         5
+
+# Custom vars
+version:          1.0.0
+
+github:
+  repo:           https://github.com/mkjeff/mkjeff.github.io
+
+plugins:          [jekyll-paginate,jekyll-gist] 
