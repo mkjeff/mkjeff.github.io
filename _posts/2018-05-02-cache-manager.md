@@ -5,10 +5,10 @@ title: Benchmark ValueTask&lt;T&gt; vs Task&lt;T&gt;
 
 `ValueTask<T>` 伴隨著 C# 7.0 推出一陣時間了，但因為抽換掉 `Task<T>` 不一定有幫助，有時甚至會[降低效能](https://stackoverflow.com/a/43003779)。因此大多數人的建議都是： Benchmark 比較再說。
 
->the default choice for any asynchronous method should be to return a Task or Task<TResult>. Only if performance analysis proves it worthwhile should a ValueTask<TResult> be used instead of Task<TResult>.
+>the default choice for any asynchronous method should be to return a `Task` or `Task<TResult>`. Only if performance analysis proves it worthwhile should a `ValueTask<TResult>` be used instead of `Task<TResult>`.
 
 
-照著[這篇文章](https://blogs.msdn.microsoft.com/seteplia/2018/01/25/the-performance-characteristics-of-async-methods/)的思路，藉此驗證一下實際案例中替換成 ValueTask<T> 能否帶來成效。
+照著[這篇文章](https://blogs.msdn.microsoft.com/seteplia/2018/01/25/the-performance-characteristics-of-async-methods/)的思路，藉此驗證一下實際案例中替換成 `ValueTask<T>` 能否帶來成效。
 
 ----
 
@@ -106,7 +106,7 @@ Benchmark結果如下:
 
 ------
 
-接下來我們來試看看用 ValueTask<T> 取代 Task<T>，完整的benchmark結果如下：
+接下來我們來試看看用 `ValueTask<T>` 取代 `Task<T>`，完整的benchmark結果如下：
 
 Cache Miss
 
@@ -130,8 +130,8 @@ Cache Hit
 |               ValueTask_WithoutCapturedVariable | 166.6 ns | 0.2539 ns | 0.2251 ns | 0.0303 |      96 B |
 | ValueTask_WithoutCapturedVariable_CacheDelegate | **156.8** ns | 0.2152 ns | 0.1797 ns | 0.0100 |      32 B |
 
-結果顯示：雖然 ValueTask 沒有比 Task 快，但差距幾乎可以忽略，就看 Memory 與 GC 成本的優化值不值得了。
+結果顯示：雖然 ValueTask 沒有比較快，但差距幾乎可以忽略，就看 Memory 與 GC 成本的優化值不值得了。
 
 ------
 
-[完整的程式碼](https://github.com/mkjeff/Benchmark/blob/master/CacheManager.linq)
+[完整程式碼](https://github.com/mkjeff/Benchmark/blob/master/CacheManager.linq)
