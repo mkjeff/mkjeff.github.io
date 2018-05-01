@@ -3,7 +3,7 @@ layout: post
 title: FiraCode for Programming
 ---
 
-這是個人很喜歡的寫程式專用字形
+自從用了這個之後就變成工作機必備的字形
 
 [FiraCode](https://github.com/tonsky/FiraCode)
 
