@@ -110,25 +110,25 @@ Benchmark結果如下:
 
 Cache Miss
 
-                                            Method |     Mean |     Error |    StdDev |  Gen 0 | Allocated |
------------------------------------------------- |---------:|----------:|----------:|-------:|----------:|
-                          GetOrCreateObjectAsync | 173.4 ns | 0.4277 ns | 0.3791 ns | 0.0710 |     **224** B |
-                         WithoutCapturedVariable | 164.8 ns | 0.3074 ns | 0.2725 ns | 0.0558 |     176 B |
-           WithoutCapturedVariable_CacheDelegate | **154.2** ns | 0.5140 ns | 0.4292 ns | 0.0355 |     112 B |
-                ValueTask_GetOrCreateObjectAsync | 170.5 ns | 0.4437 ns | 0.4151 ns | 0.0381 |     120 B |
-               ValueTask_WithoutCapturedVariable | 168.0 ns | 0.4448 ns | 0.4161 ns | 0.0305 |      96 B |
- ValueTask_WithoutCapturedVariable_CacheDelegate | **158.7** ns | 0.3101 ns | 0.2749 ns | 0.0100 |      **32** B |
+|                                            Method |     Mean |     Error |    StdDev |  Gen 0 | Allocated |
+|:----------------------------------------------- |---------:|----------:|----------:|-------:|----------:|
+|                          GetOrCreateObjectAsync | 173.4 ns | 0.4277 ns | 0.3791 ns | 0.0710 |     **224** B |
+|                         WithoutCapturedVariable | 164.8 ns | 0.3074 ns | 0.2725 ns | 0.0558 |     176 B |
+|           WithoutCapturedVariable_CacheDelegate | **154.2** ns | 0.5140 ns | 0.4292 ns | 0.0355 |     112 B |
+|                ValueTask_GetOrCreateObjectAsync | 170.5 ns | 0.4437 ns | 0.4151 ns | 0.0381 |     120 B |
+|               ValueTask_WithoutCapturedVariable | 168.0 ns | 0.4448 ns | 0.4161 ns | 0.0305 |      96 B |
+| ValueTask_WithoutCapturedVariable_CacheDelegate | **158.7** ns | 0.3101 ns | 0.2749 ns | 0.0100 |      **32** B |
 
 Cache Hit
 
-                                          Method |     Mean |     Error |    StdDev |  Gen 0 | Allocated |
------------------------------------------------- |---------:|----------:|----------:|-------:|----------:|
-                          GetOrCreateObjectAsync | 173.4 ns | 0.3568 ns | 0.3338 ns | 0.0710 |     224 B |
-                         WithoutCapturedVariable | 162.4 ns | 0.4580 ns | 0.4060 ns | 0.0558 |     176 B |
-           WithoutCapturedVariable_CacheDelegate | **154.5** ns | 0.2841 ns | 0.2658 ns | 0.0355 |     112 B |
-                ValueTask_GetOrCreateObjectAsync | 169.8 ns | 0.3438 ns | 0.3048 ns | 0.0379 |     120 B |
-               ValueTask_WithoutCapturedVariable | 166.6 ns | 0.2539 ns | 0.2251 ns | 0.0303 |      96 B |
- ValueTask_WithoutCapturedVariable_CacheDelegate | **156.8** ns | 0.2152 ns | 0.1797 ns | 0.0100 |      32 B |
+|                                          Method |     Mean |     Error |    StdDev |  Gen 0 | Allocated |
+|:----------------------------------------------- |---------:|----------:|----------:|-------:|----------:|
+|                          GetOrCreateObjectAsync | 173.4 ns | 0.3568 ns | 0.3338 ns | 0.0710 |     224 B |
+|                         WithoutCapturedVariable | 162.4 ns | 0.4580 ns | 0.4060 ns | 0.0558 |     176 B |
+|           WithoutCapturedVariable_CacheDelegate | **154.5** ns | 0.2841 ns | 0.2658 ns | 0.0355 |     112 B |
+|                ValueTask_GetOrCreateObjectAsync | 169.8 ns | 0.3438 ns | 0.3048 ns | 0.0379 |     120 B |
+|               ValueTask_WithoutCapturedVariable | 166.6 ns | 0.2539 ns | 0.2251 ns | 0.0303 |      96 B |
+| ValueTask_WithoutCapturedVariable_CacheDelegate | **156.8** ns | 0.2152 ns | 0.1797 ns | 0.0100 |      32 B |
 
 結果顯示：雖然 ValueTask 沒有比 Task 快，但差距幾乎可以忽略，就看 Memory 與 GC 成本的優化值不值得了。
 
