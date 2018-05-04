@@ -13,7 +13,7 @@ C# 從 7.0 之後引入了幾個跟實值型別效能相關的特性:
 5. [ref struct 類型](https://docs.microsoft.com/zh-tw/dotnet/csharp/reference-semantics-with-value-types#ref-struct-type)
 6. [readonly ref struct 類型](https://docs.microsoft.com/zh-tw/dotnet/csharp/reference-semantics-with-value-types#readonly-ref-struct-type)
 
-所做的一切都是為了降低GC回收成本以提升效能。`ref struct`(`Span<T>`)是 `dotnetcore 2.1` 最大的亮點，在此就先不討論了。
+這一切都是為了降低GC回收成本以提升效能。`ref struct`(`Span<T>`)是 `dotnetcore 2.1` 最大的亮點，在此就先不討論了。
 
 ----
 以實值型別作為參數或是回結果的時候，預設都是使用副本傳遞(pass by value)。雖然在呼叫堆疊(call stack)上宣告的實值型別變數不會使用堆積(Heap)配置，因此不需要 GC 回收，但如果實值型別體積過大，記憶體複製所帶來的效能影響還是很可觀，因此我們*不能一廂情願地為了效能而使用實值型別*。
@@ -31,7 +31,7 @@ out 參數這種的呼叫形式相信很多人都很反感，既使 C# 7.0開始
 
 進入正題
 =====
-`readonly` 是 C# 一開始就有的關鍵字，但很多人可能不知道的是`readonly`套用在實值型別變數上會*Defensive Copy*的副作用。
+`readonly` 是 C# 一開始就有的關鍵字，但很多人可能不知道的是`readonly`套用在實值型別變數上有*Defensive Copy*的副作用。
 
 ```csharp
 struct Value {
@@ -70,7 +70,7 @@ X = 1
 
 ----
 同樣是 7.2 加入的`in 參數`又是做什麼用的呢？前面有提到為了避免大型實質物件參數傳遞的開銷，我們可以將參數宣告成`ref`(copy by reference)；可是 ref 沒有唯讀的語意。
-C# 團隊之所以不用`readonly ref`的原因，其實是為了讓既有的程式碼可以更容易移植：`ref`、`out`參數在呼叫端也必須使用對應的關鍵字，而`in`參數呼叫形式與一般參數無異
+因此使用了之前就存在的 in 關鍵字(老實說跟原本在泛型約束的用途差的有點多)，C# 團隊之所以不用`readonly ref`的原因，其實是為了讓既有的程式碼可以更容易移植：`ref`、`out`參數在呼叫端也必須使用對應的關鍵字，而`in`參數呼叫形式與一般參數無異
 
 ```csharp
 void Foo(in int a);
@@ -78,7 +78,7 @@ void Foo(in int a);
 Foo(10); // it's ok without 'in'
 ```
 
-最後以此類推 `readonly ref return` 就是具有唯讀語意的 `ref return`
+也可以跟 readonly `ref return`有所區別(解讀為具有唯讀語意的 `ref return`)
 
 >
 實質型別的設計原則
@@ -87,14 +87,14 @@ Foo(10); // it's ok without 'in'
 
 補充說明
 ====
-Defensive Copy 的行為必須透過 IL 代碼才能觀察出來，以上面的例子來看
+Defensive Copy 只能透過編譯器產生的 IL 代碼才能觀察出來，以上面的例子來看
 
 Defensive Copy
 ```
 IL_0000:  ldstr       "X = {0}"
 IL_0005:  ldsfld      UserQuery.value  /// 產生另一個副本
 IL_000A:  stloc.0                      /// 
-IL_000B:  ldloca.s    00               ///   
+IL_000B:  ldloca.s    00               ///  
 IL_000D:  call        UserQuery+Value.get_X
 IL_0012:  box         System.Int32
 IL_0017:  call        System.String.Format
@@ -115,8 +115,8 @@ IL_001E:  ret
 
 參考：
 >
-1. [The ‘in’-modifier and the readonly structs in C#](https://blogs.msdn.microsoft.com/seteplia/2018/03/07/the-in-modifier-and-the-readonly-structs-in-c/)
-2. [Performance traps of ref locals and ref returns in C#](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
-3. [Avoiding struct and readonly reference performance pitfalls with ErrorProne.NET](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
-4. *[Safe to return rules for ref returns](http://mustoverride.com/safe-to-return/)
-5. **[What happens if ‘out’ parameter is not assigned by the calee?](http://mustoverride.com/broken-out/)
+- [The ‘in’-modifier and the readonly structs in C#](https://blogs.msdn.microsoft.com/seteplia/2018/03/07/the-in-modifier-and-the-readonly-structs-in-c/)
+- [Performance traps of ref locals and ref returns in C#](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
+- [Avoiding struct and readonly reference performance pitfalls with ErrorProne.NET](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
+- *[Safe to return rules for ref returns](http://mustoverride.com/safe-to-return/)
+- **[What happens if ‘out’ parameter is not assigned by the calee?](http://mustoverride.com/broken-out/)
