@@ -113,8 +113,9 @@ IL_0019:  call        System.Console.WriteLine
 IL_001E:  ret     
 ```
 
-強烈建議閱讀相關文章：
->1. [The ‘in’-modifier and the readonly structs in C#](https://blogs.msdn.microsoft.com/seteplia/2018/03/07/the-in-modifier-and-the-readonly-structs-in-c/)
+參考：
+>
+1. [The ‘in’-modifier and the readonly structs in C#](https://blogs.msdn.microsoft.com/seteplia/2018/03/07/the-in-modifier-and-the-readonly-structs-in-c/)
 2. [Performance traps of ref locals and ref returns in C#](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
 3. [Avoiding struct and readonly reference performance pitfalls with ErrorProne.NET](https://blogs.msdn.microsoft.com/seteplia/2018/05/03/avoiding-struct-and-readonly-reference-performance-pitfalls-with-errorprone-net/)
 4. *[Safe to return rules for ref returns](http://mustoverride.com/safe-to-return/)
